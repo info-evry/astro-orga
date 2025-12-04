@@ -166,7 +166,3 @@ Edit `scripts/generate-presentation.ts` to customize:
 - [astro-ndi](https://github.com/info-evry/astro-ndi) - Nuit de l'Info registration site
 
 ---
-
-## License
-
-MIT License - See [LICENSE](LICENSE) for details.

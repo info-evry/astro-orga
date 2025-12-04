@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Organization tools for Asso Info Evry - presentations, events, and more",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "generate": "bun run scripts/generate-presentation.ts",
     "generate:verbose": "bun run scripts/generate-presentation.ts --verbose",

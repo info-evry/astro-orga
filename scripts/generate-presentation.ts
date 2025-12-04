@@ -11,12 +11,17 @@
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import { PDFDocument } from 'pdf-lib';
-import { resolve } from 'path';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { mkdir, readdir, unlink, readFile } from 'node:fs/promises';
 import QRCode from 'qrcode-svg';
 import * as cli from '../src/cli';
 
-const ROOT_DIR = resolve(import.meta.dir, '..');
+// Support both Bun (import.meta.dir) and Node.js (import.meta.url)
+const __dirname = typeof import.meta.dir === 'string'
+  ? import.meta.dir
+  : dirname(fileURLToPath(import.meta.url));
+const ROOT_DIR = resolve(__dirname, '..');
 const ASSETS_DIR = resolve(ROOT_DIR, 'assets');
 const LOGO_PATH = resolve(ASSETS_DIR, 'AIE.png');
 const LOCKEDUP_LOGO_PATH = resolve(ASSETS_DIR, 'lockedup.logo.png');

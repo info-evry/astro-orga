@@ -169,4 +169,4 @@ Edit `scripts/generate-presentation.ts` to customize:
 
 ## License
 
-MIT License - Part of the Info Evry Astro ecosystem.
+MIT License - See [LICENSE](LICENSE) for details.

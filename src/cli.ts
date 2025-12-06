@@ -62,9 +62,6 @@ function formatDuration(ms: number): string {
 }
 
 export class Spinner {
-  private frames = ['\u280B', '\u2819', '\u2839', '\u2838', '\u283C', '\u2834', '\u2826', '\u2827', '\u2807', '\u280F'];
-  private current = 0;
-  private interval: ReturnType<typeof setInterval> | null = null;
   private text: string;
   private startTimestamp: number | undefined;
 
@@ -74,15 +71,7 @@ export class Spinner {
 
   start(): void {
     this.startTimestamp = Date.now();
-    if (isCI) {
-      console.log(`${colors.cyan}\u25CC${colors.reset} ${this.text}...`);
-    } else {
-      process.stdout.write(`${colors.cyan}${this.frames[0]}${colors.reset} ${this.text}`);
-      this.interval = setInterval(() => {
-        this.current = (this.current + 1) % this.frames.length;
-        process.stdout.write(`\r${colors.cyan}${this.frames[this.current]}${colors.reset} ${this.text}`);
-      }, 80);
-    }
+    console.log(`${colors.cyan}\u25CB${colors.reset} ${this.text}...`);
   }
 
   stop(success = true): void {
@@ -91,19 +80,8 @@ export class Spinner {
       duration = Date.now() - this.startTimestamp;
     }
     const durationStr = duration > 1000 ? ` ${colors.dim}(${formatDuration(duration)})${colors.reset}` : '';
-
-    if (this.interval) {
-      clearInterval(this.interval);
-      this.interval = null;
-    }
-
     const icon = success ? `${colors.green}${icons.success}${colors.reset}` : `${colors.red}${icons.error}${colors.reset}`;
-
-    if (isCI) {
-      console.log(`${icon} ${this.text}${durationStr}`);
-    } else {
-      process.stdout.write(`\r${icon} ${this.text}${durationStr}\n`);
-    }
+    console.log(`${icon} ${this.text}${durationStr}`);
   }
 
   update(text: string): void {

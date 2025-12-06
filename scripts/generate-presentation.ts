@@ -11,8 +11,8 @@
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
 import { PDFDocument } from 'pdf-lib';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { mkdir, readdir, unlink, readFile } from 'node:fs/promises';
 import QRCode from 'qrcode-svg';
 import * as cli from '../src/cli';
@@ -1238,7 +1238,7 @@ async function main(): Promise<void> {
 
   // Parse --font option
   let fontPath: string | undefined;
-  const fontIndex = args.findIndex(a => a === '--font');
+  const fontIndex = args.indexOf('--font');
   if (fontIndex !== -1 && args[fontIndex + 1]) {
     fontPath = args[fontIndex + 1];
   }
@@ -1272,8 +1272,8 @@ ${cli.colors.bold}OUTPUT${cli.colors.reset}
 }
 
 if (import.meta.main) {
-  main().catch((err) => {
-    cli.error(`Presentation generation failed: ${err.message}`);
+  main().catch((error) => {
+    cli.error(`Presentation generation failed: ${error.message}`);
     process.exit(1);
   });
 }

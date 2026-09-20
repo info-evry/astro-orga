@@ -37,6 +37,16 @@ bun install
 
 Generate professional presentation slides and combine them into a single PDF.
 
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|--------------|
+| `SUBJECT_URL` | Yes | FileSender download link for the current edition's official NDI subject (slide 7). This link is per-edition and expires, so it is never hard-coded - the script throws a clear error if it is not set. |
+
+```bash
+export SUBJECT_URL="https://filesender.renater.fr/?s=download&token=..."
+```
+
 ### Usage
 
 ```bash

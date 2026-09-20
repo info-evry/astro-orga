@@ -46,7 +46,23 @@ const ASSO_NAME = 'Asso Info Evry';
 const DISCORD_URL = 'https://discord.gg/fxWsSSee';
 const NDI_URL = 'https://www.nuitdelinfo.com/';
 const ASSO_URL = 'https://asso.info-evry.fr';
-const SUBJECT_URL = 'https://filesender.renater.fr/?s=download&token=1ee59758-cb41-400c-b6c2-47fc37e1804e';
+
+// FileSender download link for the official NDI subject. This is generated
+// per-edition and expires, so it must never be hard-coded: set it via the
+// SUBJECT_URL environment variable before running this script. Resolved
+// lazily (not at module load) so importing this module for its exports
+// (e.g. in tests) doesn't require the env var to be set.
+function getSubjectUrl(): string {
+  const url = process.env.SUBJECT_URL;
+  if (!url) {
+    throw new Error(
+      'SUBJECT_URL environment variable is not set. ' +
+      'Set it to the FileSender download link for this edition\'s subject ' +
+      '(see README.md) before running generate-presentation.ts.',
+    );
+  }
+  return url;
+}
 
 // Controls how quickly orb opacity fades toward the edge
 const ORB_GRADIENT_FADE = 0.4;
@@ -1189,7 +1205,7 @@ export async function generatePresentation(verbose: boolean = false, fontPath?: 
       { name: '04-programme', generate: () => generateActivitiesSlide(fonts) },
       { name: '05-escape-game', generate: () => generateEscapeGameSlide(fonts, lockedUpLogoDataUrl) },
       { name: '06-asso', generate: () => generateAssoSlide(fonts, logoDataUrl) },
-      { name: '07-sujet', generate: () => generateQRSlide(fonts, 'Sujet de la Nuit', "Telechargez le sujet officiel de l'evenement", SUBJECT_URL, true) },
+      { name: '07-sujet', generate: () => generateQRSlide(fonts, 'Sujet de la Nuit', "Telechargez le sujet officiel de l'evenement", getSubjectUrl(), true) },
     ];
 
     const pngPaths: string[] = [];
